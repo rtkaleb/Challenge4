@@ -194,12 +194,16 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 
 ## Cost
 
-Payment & milestones
-50% on kickoff · 50% on delivery
-Validity: 14 days · Scope changes billed at $125/h
-Value summary
-Senior expertise (PhD/MSc) · Low-infra cost · Portable DB · Maintainable code
-Hourly rate : $125/hour
-Estimated effort: 12 hours (scoping 2h · implementation 7h · verification & README 3h)
-Estimated total (T&M): $1,500(guardrail range: $1,125–$1,750 for 9–14h)
+- **Hourly rate :** $125/hour
+- **Estimated effort:** 12 hours (scoping 2h · implementation 7h · verification & README 3h)
+- **Estimated total (T&M):** $1,500(guardrail range: $1,125–$1,750 for 9–14h)
+
+## Payment & milestones
+
+- 50% on kickoff · 50% on delivery
+- Validity: 14 days · Scope changes billed at $125/h
+
+## Value summary
+- Senior expertise (PhD/MSc) · Low-infra cost · Portable DB · Maintainable code
+
 
