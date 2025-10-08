@@ -1,0 +1,3 @@
+articleId,title,authors,publication_date,abstract,keywords,cited_by
+ART-0001,Liposome IL-10 Release Modeling,"Jane Doe, John Smith",2022-06-10,"We model IL-10 release using Weibull and Korsmeyer-Peppas...", "liposomes;IL-10;Weibull;Korsmeyer-Peppas",15
+ART-0002,Polymer Scaffold Optimization,Jane Doe,2023-03-22,"Optimization study for scaffold porosity...", "polymers;scaffolds;porosity",8
