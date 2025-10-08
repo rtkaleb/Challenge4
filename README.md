@@ -80,7 +80,7 @@ mongodump --version        # From Database Tools
 If `mongoimport`/`mongodump` are not recognized, install **MongoDB Database Tools** or add their `bin` folder to your `PATH`
 (e.g., `C:\Program Files\MongoDB\Tools\100\bin`).
 
-![Instalación](Sprint 1/Imágenes/1. Instalación MongoDB.png)
+![Instalación](Imágenes/1.%20Instalación%20MongoDB.png)
 
 
 
@@ -101,6 +101,8 @@ db.createCollection("restaurants")
 db.createCollection("users")
 ```
 
+![Creation](Imágenes/2.%20Creación%20de%20colecciones%20MongoDB.png)
+
 ### 4) Definition of a minimal data model
 
 ### Steps
@@ -115,6 +117,8 @@ db.createCollection("users")
    - In `articles`: unique index on `articleId` (Ascending 1)
    - In `articles`: text index on `title`
    - (Optional) In `authors`: unique index on `authorId`
+
+![DbCreated](Imágenes/3.%20DB%20created%20in%20MongoDB.png)
 
 ### Backup / Restore
 A **placeholder** backup folder has been created now at `/backup/dump-20251008-0552/`.  
