@@ -1,0 +1,25 @@
+name: Integration/Logic Error (Peer Review)
+labels: ["integration","peer-review"]
+body:
+  - type: textarea
+    id: context
+    attributes: { label: Context (PR/branch), placeholder: "PR #12 on feature/restaurants-crud" }
+  - type: textarea
+    id: observation
+    attributes: { label: Observation }
+  - type: textarea
+    id: reproduction
+    attributes: { label: Reproduction (include Postman/newman commands) }
+  - type: textarea
+    id: root_cause
+    attributes: { label: Root cause (hypothesis) }
+  - type: textarea
+    id: proposal
+    attributes: { label: Proposed fix }
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - Given ... When ... Then ...
+        - Postman test <name> passes

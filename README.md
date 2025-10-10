@@ -338,6 +338,9 @@ Expected output:
 → Recommendations by userId ✓
 ✔ 6 requests, 0 failures
 ```
+![Postman](Images/4.Postman1.png)
+![Postman](Images/4.Postman2.png)
+
 
 ---
 

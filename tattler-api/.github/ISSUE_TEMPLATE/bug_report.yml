@@ -1,0 +1,24 @@
+name: Bug report
+labels: ["bug","triage"]
+body:
+  - type: textarea
+    id: summary
+    attributes: { label: Summary, placeholder: Short description }
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1) npm run dev
+        2) GET /api/restaurants?minRating=4&maxPrice=2
+        3) Expected: ...
+        4) Actual: ...
+  - type: textarea
+    id: evidence
+    attributes: { label: Evidence (logs/screenshots) }
+  - type: input
+    id: endpoint
+    attributes: { label: Endpoint(s) affected }
+  - type: dropdown
+    id: severity
+    attributes: { label: Severity, options: ["critical","major","minor"] }
