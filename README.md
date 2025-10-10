@@ -580,12 +580,11 @@ A visual breakdown of the project budget and time distribution:
      ┌──────────────────────────┐
      │  Total: 12h = $1,500 USD │
      └──────────────────────────┘
-
+```
 ---
 
 ## 👤 Author
 **Iván Kaleb Ramírez Torres**  
 _Bécalos TechnoReady — Challenge 4 (October, 2025)_  
 Database: MongoDB | Backend: Express.js | Testing: Postman + Newman  
-[GitHub Repository](https://github.com/rtkaleb/tattler-api) *(replace with your repo URL)*
-
+[GitHub Repository](https://github.com/rtkaleb/Challenge4)
