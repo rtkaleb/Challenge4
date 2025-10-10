@@ -198,7 +198,7 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 </details>
 
 <details>
-<summary>
+<summary>Sprint 2</summary>
 # 🥗 Tattler API — Sprint 2 / Challenge 4
 > Transforming a restaurant directory into a dynamic, personalized experience  
 > _Built with Express.js + MongoDB_
@@ -475,7 +475,7 @@ Database: MongoDB | Backend: Express.js | Testing: Postman + Newman
 
 ---
 
-</summary>
+
 </details>
 
 ## Cost
