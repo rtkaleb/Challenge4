@@ -2,6 +2,9 @@
 
 This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents). Later sprints will build a **RESTful API with Express.js** that interacts with this database.
 
+<details> 
+<summary>Sprint 1</summary>
+
 > This document focuses on the **Sprint 1** requirements and references what will happen in Sprints 2 and 3 to give end‑to‑end context.
 
 ---
@@ -191,6 +194,8 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 - **Dump is too large for the repo** → Compress the folder before commit, or clean test data and re‑dump.
 
 ---
+
+</details>
 
 ## Cost
 
