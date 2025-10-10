@@ -6,7 +6,7 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "seed": "node src/seeds/seed.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
     "test:api": "newman run postman/Tattler_API.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail"
   },
   "dependencies": {
