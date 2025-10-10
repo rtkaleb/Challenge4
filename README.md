@@ -197,6 +197,287 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 
 </details>
 
+<details>
+<summary>
+# 🥗 Tattler API — Sprint 2 / Challenge 4
+> Transforming a restaurant directory into a dynamic, personalized experience  
+> _Built with Express.js + MongoDB_
+
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-brightgreen?logo=node.js)
+![Express.js](https://img.shields.io/badge/Express.js-API-blue)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-success?logo=mongodb)
+![Postman](https://img.shields.io/badge/Postman-Tests-orange?logo=postman)
+![Status](https://img.shields.io/badge/Sprint%202-Completed-green)
+
+---
+
+## 🌐 Project Overview
+**Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  
+During **Sprint 2**, the goal was to implement a fully functional **RESTful API** with Express and MongoDB to handle restaurant data and generate personalized recommendations.
+
+### Sprint Objectives
+1. Develop the RESTful API using **Express.js** and **MongoDB**.  
+2. Implement **peer reviews** to detect integration or logic errors early.  
+3. Create **Postman tests** that validate API functionality.  
+4. Ensure the codebase is **well-structured, organized, and documented**.
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer | Technology |
+|-------|-------------|
+| Backend | Node.js 18 + Express.js (ESM Modules) |
+| Database | MongoDB + Mongoose ODM |
+| Environment | dotenv (.env files) |
+| Tools | Nodemon, ESLint, Prettier |
+| Testing | Postman GUI + Newman CLI |
+| Architecture | MVC (Model – View – Controller) |
+
+---
+
+## 🧩 Repository Structure
+```
+tattler-api/
+├─ .env.example
+├─ .gitignore
+├─ package.json
+├─ README.md
+├─ openapi.yaml
+│
+├─ postman/
+│  ├─ Tattler_API.postman_collection.json
+│  └─ Tattler_Local.postman_environment.json
+│
+├─ src/
+│  ├─ index.js
+│  ├─ app.js
+│  ├─ config/db.js
+│  ├─ controllers/
+│  │  ├─ restaurant.controller.js
+│  │  └─ recommendation.controller.js
+│  ├─ middlewares/error.js
+│  ├─ models/
+│  │  ├─ restaurant.model.js
+│  │  └─ user.model.js
+│  ├─ routes/
+│  │  ├─ index.js
+│  │  ├─ restaurant.routes.js
+│  │  └─ recommendation.routes.js
+│  ├─ utils/
+│  │  ├─ ApiFeatures.js
+│  │  └─ httpResponses.js
+│  └─ seeds/seed.js
+└─ tests/e2e-notes.md
+```
+
+---
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Install Dependencies
+```bash
+npm install
+```
+
+### 2️⃣ Configure Environment
+```bash
+cp .env.example .env
+```
+Update the values if needed:
+```
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/tattler
+NODE_ENV=development
+```
+
+### 3️⃣ Seed Database
+```bash
+npm run seed
+```
+Expected output:
+```
+MongoDB connected
+Seed done. userId= 68e90ae3055527d918bace80
+```
+Save this **userId** for Postman tests.
+
+### 4️⃣ Run Server
+```bash
+npm run dev
+```
+Visit: [http://localhost:3000/health](http://localhost:3000/health)
+
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+|:-------|:----------|:-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/api/restaurants` | List restaurants (filters, sort, pagination) |
+| `GET` | `/api/restaurants/:id` | Get restaurant by ID |
+| `POST` | `/api/restaurants` | Create restaurant |
+| `PATCH` | `/api/restaurants/:id` | Update restaurant |
+| `DELETE` | `/api/restaurants/:id` | Soft-delete restaurant |
+| `GET` | `/api/recommendations?userId=<id>` | Get personalized recommendations |
+
+### Query Parameters
+`city`, `cuisine`, `minRating`, `maxPrice`, `sort`, `page`, `limit`, `search`
+
+---
+
+## 💻 Example Requests (cURL)
+
+**Health**
+```bash
+curl http://localhost:3000/health
+```
+
+**List Restaurants**
+```bash
+curl "http://localhost:3000/api/restaurants?city=Monterrey&minRating=4"
+```
+
+**Create Restaurant**
+```bash
+curl -X POST "http://localhost:3000/api/restaurants"   -H "Content-Type: application/json"   -d "{"name":"Nuevo Spot","city":"Monterrey","cuisine":["mexican"],"price_level":2,"rating":4.3}"
+```
+
+**Recommendations**
+```bash
+curl "http://localhost:3000/api/recommendations?userId=68e90ae3055527d918bace80"
+```
+
+---
+
+## 🧪 Postman & Newman Tests
+
+### Folder Structure
+```
+postman/
+├─ Tattler_API.postman_collection.json
+└─ Tattler_Local.postman_environment.json
+```
+
+### How to Import in Postman
+1. Open **Postman → Import → Upload Files**.  
+2. Select both JSON files above.  
+3. Choose environment **Tattler_Local**.  
+4. Update the variable `userId` with your seeded ID.
+
+### Run Tests in Postman
+- Click **▶ Run collection** inside Postman.
+- All 6 requests should return status 200/201.
+
+### Run Tests via Newman
+```bash
+npm run test:api
+```
+
+Expected output:
+```
+→ Health ✓
+→ List Restaurants ✓
+→ Create Restaurant ✓
+→ Get Restaurant by Id ✓
+→ Delete (Soft) Restaurant ✓
+→ Recommendations by userId ✓
+✔ 6 requests, 0 failures
+```
+
+---
+
+## 🤝 Peer Review Process
+
+- Feature branches:  
+  `feature/restaurants-crud`, `feature/recommendations`, etc.  
+- **Three partial reviews**
+  1. API skeleton + database connection  
+  2. CRUD and filtering  
+  3. Recommendations + Postman tests  
+- Each PR includes:
+  - Checklist ✅  
+  - Screenshots of Postman tests  
+  - Notes in `docs/peer-reviews/PR-xxxx-NOTES.md`
+
+---
+
+## 🧰 NPM Scripts
+
+| Command | Description |
+|:--------|:-------------|
+| `npm run dev` | Start API with nodemon |
+| `npm start` | Run API with Node |
+| `npm run seed` | Seed MongoDB with sample data |
+| `npm run lint` | Lint code style |
+| `npm run test:api` | Run Postman collection with Newman |
+
+---
+
+## 🗂️ Database Samples
+
+**Restaurant**
+```json
+{
+  "name": "Taquería La Silla",
+  "city": "Monterrey",
+  "cuisine": ["mexican"],
+  "price_level": 1,
+  "rating": 4.5,
+  "tags": ["tacos", "casual"],
+  "isActive": true
+}
+```
+
+**User**
+```json
+{
+  "email": "demo@tattler.com",
+  "name": "Demo",
+  "preferences": {
+    "cuisines": ["mexican", "bbq"],
+    "priceRange": { "max": 3 },
+    "cities": ["Monterrey"]
+  }
+}
+```
+
+---
+
+## 📘 Documentation
+- `openapi.yaml` → Minimal OpenAPI specification  
+- `README.md` → Setup, usage, and testing guide  
+- `docs/peer-reviews/` → Notes and fixes from reviews  
+
+---
+
+## 🚧 Future Improvements
+- Add Joi validation for request bodies  
+- Implement JWT authentication  
+- Add Docker support for deployment  
+- Extend recommendation logic (AI/data-driven filtering)
+
+---
+
+## 📸 Evidence (Attach Screenshots)
+- ✅ Postman collection results  
+- ✅ `npm run test:api` CLI output  
+- ✅ MongoDB Compass collections  
+
+---
+
+## 👤 Author
+**Iván Kaleb Ramírez Torres**  
+_Bécalos TechnoReady — Challenge 4 (Sprint 2, 2025)_  
+Database: MongoDB | Backend: Express.js | Testing: Postman + Newman  
+[GitHub Repository](https://github.com/rtkaleb/tattler-api) *(replace with your repo URL)*
+
+---
+
+</summary>
+</details>
+
 ## Cost
 
 - **Hourly rate :** $125/hour
