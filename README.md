@@ -1,35 +1,27 @@
 # MongoDB Database Setup – Restaurant Directory Platform 
 
-This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents). Later sprints will build a **RESTful API with Express.js** that interacts with this database.
+This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents). 
+
+**Project Deliverables**  
+**Sprint 1**: Set up and develop of database in MongoDB, **upload a database backup file**, including **created collections** and **import scripts from CSV files**.  
+**Sprint 2**: Develop a RESTful API using Express.js and MongoDB; test with Postman/Insomnia.  
+**Sprint 3**: Extend the API with **search and filtering** features; demonstrate with Postman/Insomnia tests.  
+
+**Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  
+
 
 <details> 
 <summary>Sprint 1</summary>
 
-> This document focuses on the **Sprint 1** requirements and references what will happen in Sprints 2 and 3 to give end‑to‑end context.
 
 ---
-
-## Project Details (Challenge 4)
-
-1) **Project**  
-The project consists of transforming a restaurant directory platform to offer users a personalized and dynamic experience. To achieve this, **non‑relational databases—specifically MongoDB—**will be used to store data in JSON format. Additionally, a **RESTful API** will be developed using **Express.js** to enable interaction with this data.
-
-2) **Project Deliverables**  
-**Sprint 1**: Set up and develop the database in MongoDB, configure a GitHub repository with the basic structure of the project, and **upload a database backup file**, including **created collections** and **import scripts from CSV files**.  
-**Sprint 2**: Develop a RESTful API using Express.js and MongoDB; test with Postman/Insomnia and upload it to the repository.  
-**Sprint 3**: Extend the API with **search and filtering** features; demonstrate with Postman/Insomnia tests.  
-**Final Submission**: Integrate all deliverables and present to Digital NAO evaluators in **two formats**: a **PDF** (analysis & results) and an **MP4** (video presentation).
-
----
-
-## What this repository contains (Sprint 1)
 # scholar-db-mongo
 
-Database setup for the **Google Scholar** project (Sprint 1).  
+Database setup for the **Google Scholar** project (In Challenge 3) as an example. Once having info about users or restaurants, DB will be managed with given data.  
 This repo contains a MongoDB database example, CSV import scripts, a generated backup placeholder, and screenshots.
 
 ## 1) Description of the project
-This repository initializes a MongoDB database named `scholar_db` with two collections:
+This Sprint initializes a MongoDB database named `scholar_db` with two collections:
 - `authors`
 - `articles`
 
@@ -37,7 +29,6 @@ It includes:
 - Data samples in CSV (`/data`)
 - Import scripts in PowerShell (`/scripts`)
 - A backup **placeholder** created now (`/backup/dump-YYYYMMDD-HHmm/`) with instructions to generate a real dump
-- Screenshots folder (`/screenshots`) for you to place your Compass captures
 
 ## Repository structure
 
@@ -49,11 +40,11 @@ scholar-db-mongo/
 ├─ scripts/
 │  └─ import.ps1
 ├─ backup/
-│  └─ dump-YYYYMMDD-HHmm/   # replace with your real mongodump
+│  └─ dump-YYYYMMDD-HHmm/   
 ├─ screenshots/
-│  ├─ 01-database-and-collections.png       # (place yours here)
-│  ├─ 02-authors-docs.png                   # (place yours here)
-│  └─ 03-articles-indexes.png               # (place yours here)
+│  ├─ 01-database-and-collections.png       
+│  ├─ 02-authors-docs.png                   
+│  └─ 03-articles-indexes.png              
 ├─ .gitignore
 └─ README.md
 ```
@@ -86,15 +77,14 @@ If `mongoimport`/`mongodump` are not recognized, install **MongoDB Database Tool
 ![Instalación](Imágenes/1.%20Instalación%20MongoDB.png)
 
 
-
-### 3) Create the database and collections
+### 3) Creation of database and collections
 
 **Option A — MongoDB Compass (GUI):**
 1. Connect to `mongodb://localhost:27017`
-2. Click your connection (e.g., `localhost:27017`) → **Databases** → **Create database**
+2. Click connection (e.g., `localhost:27017`) → **Databases** → **Create database**
 3. **Database name**: `restaurant_db`  
    **Collection name**: `restaurants` → **Create Database**
-4. Create additional collection(s): `users`, `reviews` (optional for Sprint 1)
+4. Create additional collection(s): `users`, `reviews` 
 
 **Option B — Mongosh (CLI):**
 ```javascript
@@ -105,6 +95,7 @@ db.createCollection("users")
 ```
 
 ![Creation](Imágenes/2.%20Creación%20de%20colecciones%20MongoDB.png)
+
 
 ### 4) Definition of a minimal data model
 
@@ -125,7 +116,7 @@ db.createCollection("users")
 
 ### Backup / Restore
 A **placeholder** backup folder has been created now at `/backup/dump-20251008-0552/`.  
-To generate a real dump on your machine, run:
+To generate a real dump on machine, run:
 ```powershell
 $stamp = Get-Date -Format "yyyyMMdd-HHmm"
 mongodump --db scholar_db --out ".\backup\dump-$stamp"
@@ -135,45 +126,6 @@ To restore (if needed):
 mongorestore --db scholar_db ".\backup\dump-YYYYMMDD-HHmm\scholar_db"
 ```
 
-
----
-
-## Skills Required
-
-**Hard Skills — Knowledge of:**
-- Database management systems
-- Databases & data modeling
-- Understanding of relational, non‑relational, and distributed databases
-- MongoDB
-
-**Technical:**
-- Managing non‑relational databases
-- JSON format handling
-- Proficiency in MongoDB
-- Proficiency in Studio 3T (optional alternative to Compass)
-
-**Soft Skills:**
-- Results‑oriented
-- Quality‑focused
-- Analytical thinking
-- Teamwork
-
----
-
-## Licenses / Tools Used
-
-**Sprints 1, 2, and 3**
-- **MongoDB**: creation of databases, collections, and indexes (use **Community** edition)
-- **GitHub or GitLab**: code storage & version control
-- **Visual Studio Code**: IDE
-
-**Sprints 2 and 3**
-- **Express.js**: RESTful API development
-- **Postman or Insomnia**: API testing
-
-**Note:**  
-Visual Studio Code, Express.js, and GitHub are **free**.  
-Postman, Insomnia, and MongoDB provide **permanently free** plans with the necessary features. For MongoDB, select **Community**.
 
 ---
 
@@ -199,6 +151,7 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 
 <details>
 <summary>Sprint 2</summary>
+
 # 🥗 Tattler API — Sprint 2 / Challenge 4
 > Transforming a restaurant directory into a dynamic, personalized experience  
 > _Built with Express.js + MongoDB_
@@ -212,7 +165,7 @@ Use **Major.Minor.Patch** and mention it in commit messages, e.g.:
 ---
 
 ## 🌐 Project Overview
-**Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  
+
 During **Sprint 2**, the goal was to implement a fully functional **RESTful API** with Express and MongoDB to handle restaurant data and generate personalized recommendations.
 
 ### Sprint Objectives
@@ -460,23 +413,48 @@ Expected output:
 
 ---
 
-## 📸 Evidence (Attach Screenshots)
-- ✅ Postman collection results  
-- ✅ `npm run test:api` CLI output  
-- ✅ MongoDB Compass collections  
-
----
-
-## 👤 Author
-**Iván Kaleb Ramírez Torres**  
-_Bécalos TechnoReady — Challenge 4 (Sprint 2, 2025)_  
-Database: MongoDB | Backend: Express.js | Testing: Postman + Newman  
-[GitHub Repository](https://github.com/rtkaleb/tattler-api) *(replace with your repo URL)*
-
----
-
 
 </details>
+
+## Skills Required
+
+**Hard Skills — Knowledge of:**
+- Database management systems
+- Databases & data modeling
+- Understanding of relational, non‑relational, and distributed databases
+- MongoDB
+
+**Technical:**
+- Managing non‑relational databases
+- JSON format handling
+- Proficiency in MongoDB
+- Proficiency in Studio 3T (optional alternative to Compass)
+
+**Soft Skills:**
+- Results‑oriented
+- Quality‑focused
+- Analytical thinking
+- Teamwork
+
+---
+
+
+## Licenses / Tools Used
+
+**Sprints 1, 2, and 3**
+- **MongoDB**: creation of databases, collections, and indexes (use **Community** edition)
+- **GitHub or GitLab**: code storage & version control
+- **Visual Studio Code**: IDE
+
+**Sprints 2 and 3**
+- **Express.js**: RESTful API development
+- **Postman or Insomnia**: API testing
+
+**Note:**  
+Visual Studio Code, Express.js, and GitHub are **free**.  
+Postman, Insomnia, and MongoDB provide **permanently free** plans with the necessary features. For MongoDB, select **Community**.
+
+---
 
 ## Cost
 
@@ -492,4 +470,11 @@ Database: MongoDB | Backend: Express.js | Testing: Postman + Newman
 ## Value summary
 - Senior expertise (PhD/MSc) · Low-infra cost · Portable DB · Maintainable code
 
+---
+
+## 👤 Author
+**Iván Kaleb Ramírez Torres**  
+_Bécalos TechnoReady — Challenge 4 (Sprint 2, 2025)_  
+Database: MongoDB | Backend: Express.js | Testing: Postman + Newman  
+[GitHub Repository](https://github.com/rtkaleb/tattler-api) *(replace with your repo URL)*
 
