@@ -74,7 +74,7 @@ mongodump --version        # From Database Tools
 If `mongoimport`/`mongodump` are not recognized, install **MongoDB Database Tools** or add their `bin` folder to your `PATH`
 (e.g., `C:\Program Files\MongoDB\Tools\100\bin`).
 
-![Instalación](Imágenes/1.%20Instalación%20MongoDB.png)
+![Instalación](Images/1.%20Instalación%20MongoDB.png)
 
 
 ### 3) Creation of database and collections
@@ -94,7 +94,7 @@ db.createCollection("restaurants")
 db.createCollection("users")
 ```
 
-![Creation](Imágenes/2.%20Creación%20de%20colecciones%20MongoDB.png)
+![Creation](Images/2.%20Creación%20de%20colecciones%20MongoDB.png)
 
 
 ### 4) Definition of a minimal data model
@@ -112,7 +112,7 @@ db.createCollection("users")
    - In `articles`: text index on `title`
    - (Optional) In `authors`: unique index on `authorId`
 
-![DbCreated](Imágenes/3.%20DB%20created%20in%20MongoDB.png)
+![DbCreated](Images/3.%20DB%20created%20in%20MongoDB.png)
 
 ### Backup / Restore
 A **placeholder** backup folder has been created now at `/backup/dump-20251008-0552/`.  
@@ -416,65 +416,176 @@ Expected output:
 
 </details>
 
-## Skills Required
+## 🧠 Skills Required
 
-**Hard Skills — Knowledge of:**
-- Database management systems
-- Databases & data modeling
-- Understanding of relational, non‑relational, and distributed databases
-- MongoDB
+### 💼 Hard Skills — Knowledge of:
+- Database management systems  
+- Databases & data modeling  
+- Understanding of relational, non-relational, and distributed databases  
+- MongoDB  
 
-**Technical:**
-- Managing non‑relational databases
-- JSON format handling
-- Proficiency in MongoDB
-- Proficiency in Studio 3T (optional alternative to Compass)
+### ⚙️ Technical:
+- Managing non-relational databases  
+- JSON format handling  
+- Proficiency in MongoDB  
+- Proficiency in Studio 3T (optional alternative to Compass)  
 
-**Soft Skills:**
-- Results‑oriented
-- Quality‑focused
-- Analytical thinking
-- Teamwork
-
----
-
-
-## Licenses / Tools Used
-
-**Sprints 1, 2, and 3**
-- **MongoDB**: creation of databases, collections, and indexes (use **Community** edition)
-- **GitHub or GitLab**: code storage & version control
-- **Visual Studio Code**: IDE
-
-**Sprints 2 and 3**
-- **Express.js**: RESTful API development
-- **Postman or Insomnia**: API testing
-
-**Note:**  
-Visual Studio Code, Express.js, and GitHub are **free**.  
-Postman, Insomnia, and MongoDB provide **permanently free** plans with the necessary features. For MongoDB, select **Community**.
+### 🤝 Soft Skills:
+- Results-oriented mindset  
+- Quality-focused development  
+- Analytical thinking  
+- Team collaboration  
 
 ---
 
-## Cost
+## ♻️ Sustainability
 
-- **Hourly rate :** $125/hour
-- **Estimated effort:** 12 hours (scoping 2h · implementation 7h · verification & README 3h)
-- **Estimated total (T&M):** $1,500(guardrail range: $1,125–$1,750 for 9–14h)
+This project was designed with long-term **technical** and **environmental sustainability** in mind, ensuring efficient resource usage, modular growth, and minimal waste.
 
-## Payment & milestones
+### 🌿 1. Efficient Resource Use  
+By using a **non-relational MongoDB database** and **RESTful API** architecture, the system minimizes redundant data and optimizes query performance.  
+Each request retrieves only what is necessary, reducing computational load and energy consumption. The JSON-based format ensures lightweight data transfer and efficient storage.
 
-- 50% on kickoff · 50% on delivery
-- Validity: 14 days · Scope changes billed at $125/h
+### 🧩 2. Reusability and Modularity  
+Developed with **Express.js** under a **modular structure**, each component (routes, controllers, and models) can be maintained or expanded independently.  
+This modularity reduces the need for full system redeployment, making the project easier to update and adapt over time.
 
-## Value summary
-- Senior expertise (PhD/MSc) · Low-infra cost · Portable DB · Maintainable code
+### ⚙️ 3. Lightweight Infrastructure  
+The system runs smoothly on minimal hardware and can be deployed to **low-cost cloud environments**.  
+Automated scripts handle data imports, backups, and database management efficiently, minimizing maintenance time and resource consumption.
+
+### 🌍 4. Open Knowledge and Educational Impact  
+All documentation, scripts, and database structures are shared openly, encouraging **reuse, learning, and collaboration**.  
+This openness promotes sustainable knowledge growth and supports academic and open-source communities.
+
+---
+
+## 🚀 Scalability and Long-Term Viability
+
+The project architecture was built to support **future growth**, ensuring that it can evolve, scale, and remain functional over the long term.
+
+### 📈 1. Horizontal and Vertical Scalability  
+MongoDB supports **horizontal scaling**, allowing the database to grow seamlessly as data or users increase.  
+The Express.js API can easily integrate new endpoints or services without performance loss, supporting continuous platform expansion.
+
+### 🧠 2. Future-Proof Architecture  
+The combination of **Node.js + Express + MongoDB** guarantees compatibility with emerging web technologies.  
+MongoDB’s **flexible schema** allows adding new attributes or collections without breaking existing functionality.
+
+### 🧰 3. Maintainability and Low Technical Debt  
+Using the **MVC pattern**, automated import scripts, and clear documentation ensures the codebase is easy to maintain.  
+Future developers can extend or refactor components with minimal effort, prolonging the project’s useful life.
+
+### 💰 4. Economic and Operational Viability  
+This project uses only **open-source tools**, avoiding license fees and vendor lock-in.  
+Its lightweight server requirements make it **cost-effective**, ideal for educational use, small organizations, or startups.
+
+### 🌱 5. Sustainable Growth Strategy  
+The database and REST API are optimized for scalable performance.  
+Even as the data volume or user traffic increases, the architecture ensures **stable performance, low latency, and efficient cost scaling**.
+
+---
+
+## 🧭 Scalability Diagram
+
+Below is a simplified view of how the project scales across its main layers:
+
+```plaintext
+                ┌───────────────────────────────┐
+                │         CLIENT SIDE           │
+                │  (User Interface / Frontend)  │
+                └──────────────┬────────────────┘
+                               │
+                               ▼
+                ┌───────────────────────────────┐
+                │        EXPRESS SERVER         │
+                │   RESTful API / Controllers   │
+                └──────────────┬────────────────┘
+                               │
+                               ▼
+                ┌───────────────────────────────┐
+                │           MONGODB             │
+                │  Non-relational JSON storage  │
+                └──────────────┬────────────────┘
+                               │
+                               ▼
+                ┌───────────────────────────────┐
+                │    CLOUD INFRASTRUCTURE       │
+                │ (Horizontal Scaling Enabled)  │
+                └───────────────────────────────┘
+
+
+## 🧰 Licenses / Tools Used
+
+### 🏁 Sprints 1, 2, and 3
+- **MongoDB** — Creation of databases, collections, and indexes *(Community edition)*  
+- **GitHub or GitLab** — Code storage & version control  
+- **Visual Studio Code** — Integrated Development Environment  
+
+### ⚙️ Sprints 2 and 3
+- **Express.js** — RESTful API development  
+- **Postman or Insomnia** — API testing  
+
+💡 *All listed tools are free.*  
+Visual Studio Code, Express.js, and GitHub are open-source.  
+Postman, Insomnia, and MongoDB provide **permanent free plans** with the necessary professional features. *(Select MongoDB Community Edition.)*
+
+---
+
+## 💲 Cost & Time Estimation
+
+| **Item** | **Description** | **Estimate** |
+|-----------|-----------------|---------------|
+| **Hourly rate** | $125 USD/hour | — |
+| **Total effort** | 12 hours *(scoping 2h · implementation 7h · verification & README 3h)* | — |
+| **Estimated total (T&M)** | $1,500 USD | *(Range: $1,125 – $1,750 for 9–14h)* |
+| **Payment milestones** | 50% on kickoff · 50% on delivery | — |
+| **Validity** | 14 days | — |
+| **Changes to scope** | Billed at $125/hour | — |
+
+### 💵 Cost Diagram
+A visual breakdown of the project budget and time distribution:
+
+```plaintext
+        ┌──────────────────────────────────────┐
+        │          COST & TIME OVERVIEW        │
+        └──────────────────────────────────────┘
+                   │
+                   ▼
+     ┌──────────────────────────┐
+     │   Scoping Phase (2h)     │  $250
+     │  ──────────────────────  │
+     │  Requirements analysis   │
+     │  Architecture planning   │
+     └──────────────────────────┘
+                   │
+                   ▼
+     ┌──────────────────────────┐
+     │ Implementation (7h)      │  $875
+     │  ──────────────────────  │
+     │  Database setup (Mongo)  │
+     │  API development (Express)│
+     │  Testing (Postman)       │
+     └──────────────────────────┘
+                   │
+                   ▼
+     ┌──────────────────────────┐
+     │ Verification & README (3h)│  $375
+     │  ──────────────────────  │
+     │  Documentation & QA      │
+     │  Code delivery & cleanup │
+     └──────────────────────────┘
+                   │
+                   ▼
+     ┌──────────────────────────┐
+     │  Total: 12h = $1,500 USD │
+     └──────────────────────────┘
 
 ---
 
 ## 👤 Author
 **Iván Kaleb Ramírez Torres**  
-_Bécalos TechnoReady — Challenge 4 (Sprint 2, 2025)_  
+_Bécalos TechnoReady — Challenge 4 (October, 2025)_  
 Database: MongoDB | Backend: Express.js | Testing: Postman + Newman  
 [GitHub Repository](https://github.com/rtkaleb/tattler-api) *(replace with your repo URL)*
 
