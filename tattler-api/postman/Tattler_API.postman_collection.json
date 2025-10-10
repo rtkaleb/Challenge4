@@ -1,0 +1,148 @@
+{
+  "info": {
+    "name": "Tattler API",
+    "_postman_id": "7f0ab8f1-aaaa-bbbb-cccc-collection",
+    "description": "Colección de pruebas para Tattler API (Sprint 2)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Body ok:true\", () => {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.ok).to.eql(true);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Restaurants",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/restaurants?city=Monterrey&minRating=0&limit=10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test(\"Tiene count y data[]\", () => {",
+              "  pm.expect(json).to.have.property('count');",
+              "  pm.expect(json).to.have.property('data');",
+              "  pm.expect(json.data).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create Restaurant",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Nuevo Spot Postman\",\n  \"city\": \"Monterrey\",\n  \"cuisine\": [\"mexican\"],\n  \"price_level\": 2,\n  \"rating\": 4.2,\n  \"tags\": [\"tacos\",\"casual\"]\n}"
+        },
+        "url": "{{baseUrl}}/api/restaurants"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.test(\"Devuelve _id\", () => pm.expect(json).to.have.property('_id'));",
+              "// Guarda el _id en environment para las siguientes requests",
+              "pm.environment.set('restaurantId', json._id);",
+              "pm.test(\"Guarda restaurantId en environment\", () => pm.expect(pm.environment.get('restaurantId')).to.be.a('string'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Restaurant by Id",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/restaurants/{{restaurantId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test(\"Coincide _id\", () => pm.expect(json._id).to.eql(pm.environment.get('restaurantId')));",
+              "pm.test(\"Tiene name y city\", () => {",
+              "  pm.expect(json).to.have.property('name');",
+              "  pm.expect(json).to.have.property('city');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete (Soft) Restaurant",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/restaurants/{{restaurantId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test(\"Mensaje Deleted\", () => pm.expect(json.message).to.eql('Deleted'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommendations by userId",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/recommendations?userId={{userId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test(\"Tiene recommendations[]\", () => {",
+              "  pm.expect(json).to.have.property('recommendations');",
+              "  pm.expect(json.recommendations).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
