@@ -431,6 +431,8 @@ Expected output:
 <details>
 <summary>Sprint 3</summary>
 
+----
+
 Throughout **Sprint 3**, the project was expanded with **new search, filtering, sorting, and pagination features** that allow users to retrieve restaurant data dynamically and efficiently.
 
 These improvements provide a more flexible experience for users to:
