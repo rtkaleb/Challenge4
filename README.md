@@ -629,6 +629,7 @@ Indexes are managed by `create-indexes.js` and automatically synchronized from y
 
 </details>
 
+
 <details>
 <summary>More Info</summary>
 
@@ -798,8 +799,6 @@ A visual breakdown of the project budget and time distribution:
      └──────────────────────────┘
 ```
 
-
-----
 
 </details>
 
