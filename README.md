@@ -431,6 +431,199 @@ Expected output:
 <details>
 <summary>Sprint 3</summary>
 
+Throughout **Sprint 3**, the project was expanded with **new search, filtering, sorting, and pagination features** that allow users to retrieve restaurant data dynamically and efficiently.
+
+These improvements provide a more flexible experience for users to:
+- 🔎 Search restaurants by name, cuisine, or tags.
+- 🧩 Filter results by city, cuisine, price range, rating, or open status.
+- ↕️ Sort results dynamically by rating, price, name, or creation date.
+- 📄 Paginate results through `page` and `limit` query parameters.
+
+---
+
+## 🎯 Project Purpose
+The main objective of this sprint is to enhance the usability and functionality of the Tattler API by:
+- Implementing **intelligent search mechanisms** through MongoDB text indexes.
+- Allowing **dynamic filtering** and **custom sorting** in API queries.
+- Improving **response efficiency** through pagination and optimized database indexes.
+- Ensuring reliability through **Postman and Newman tests** demonstrating each feature’s performance.
+
+---
+
+## ⚙️ Installation and Usage Instructions
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/tattler-api.git
+cd tattler-api
+```
+
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
+
+### 3️⃣ Create the `.env` File
+Inside the project root, create a `.env` file with the following content:
+
+```env
+PORT=3000
+NODE_ENV=development
+MONGODB_URI=mongodb://127.0.0.1:27017/tattler
+MONGO_URI=mongodb://127.0.0.1:27017
+MONGO_DBNAME=tattler
+```
+
+> ⚠️ Make sure MongoDB service is running before starting the server.
+
+### 4️⃣ Create Database Indexes
+Run the script to ensure all indexes required for filtering and searching are properly created:
+
+```bash
+npm run make:indexes
+```
+
+### 5️⃣ Start the Development Server
+```bash
+npm run dev
+```
+
+Server running at:  
+➡️ `http://localhost:3000`
+
+---
+
+## 🧩 Repository Structure
+
+```
+tattler-api/
+│
+├── src/
+│   ├── config/
+│   │   └── db.js                  # Database connection setup
+│   ├── controllers/
+│   │   └── restaurant.controller.js   # Controller with search, filter & sort logic
+│   ├── models/
+│   │   └── restaurant.model.js    # Mongoose schema and indexes definition
+│   ├── routes/
+│   │   └── restaurant.routes.js   # Express routes for restaurant endpoints
+│   ├── scripts/
+│   │   └── create-indexes.js      # Script to create or sync MongoDB indexes
+│   └── index.js                   # Main application entry point
+│
+├── postman/
+│   ├── Tattler_API.postman_collection.json
+│   ├── Tattler_Search.postman_collection.json
+│   └── Tattler_Local.postman_environment.json
+│
+├── .env
+├── package.json
+└── README.md
+```
+
+---
+
+## 🔗 API Endpoints Summary
+
+### `GET /api/restaurants`
+Fetches a list of restaurants applying **search**, **filter**, **sort**, and **pagination** options.
+
+#### Query Parameters
+| Parameter | Type | Description |
+|------------|------|-------------|
+| `q` | String | Text search on `name`, `tags`, and `cuisine`. |
+| `city` | String | Filter by city. |
+| `cuisine` | String | Filter by cuisine (comma-separated list). |
+| `price_min`, `price_max` | Number | Filter by price range. |
+| `rating_gte` | Number | Minimum rating. |
+| `open_now` | Boolean | Filter by open restaurants only. |
+| `sort` | String | Sort by field (`rating`, `price`, `name`, `createdAt`). |
+| `order` | String | Sorting order (`asc` or `desc`). |
+| `page` | Number | Page number for pagination. |
+| `limit` | Number | Items per page. |
+
+#### Example Response
+```json
+{
+  "page": 1,
+  "limit": 5,
+  "total": 32,
+  "totalPages": 7,
+  "items": [
+    {
+      "_id": "6521d...",
+      "name": "La Casa del Taco",
+      "city": "Monterrey",
+      "cuisine": ["Mexican"],
+      "price": 120,
+      "rating": 4.7,
+      "openNow": true
+    }
+  ]
+}
+```
+
+---
+
+## 🧪 Testing
+
+### 🔹 Postman Testing (Manual)
+Import the following into **Postman**:
+- `postman/Tattler_Search.postman_collection.json`
+- `postman/Tattler_Local.postman_environment.json`
+
+Set environment to **Tattler_Local** and run the requests to validate:
+- Text search (`q` parameter)
+- Filters (`city`, `cuisine`, `rating_gte`, `price_min/max`)
+- Sorting (`sort` + `order`)
+- Pagination (`page`, `limit`)
+
+#### 💡 Recommended Screenshots for README
+
+
+📸 *SS that will be added here*:
+
+
+
+1. **Search test** — Demonstrating `q` and `city` filters.  
+2. **Sorting test** — Showing results ordered by `rating desc`.  
+3. **Pagination test** — Showing multiple pages of results.  
+4. **Combined filters** — Example of query with `cuisine`, `rating_gte`, and `open_now`.  
+
+
+---
+
+### 🔹 Newman CLI Testing (Automated)
+Run the automated test collection in the terminal:
+
+```bash
+npm run test:search
+```
+
+This uses **Newman** to validate all endpoints automatically and stops execution if any test fails.
+
+---
+
+## 🧱 Database Indexes
+Indexes are managed by `create-indexes.js` and automatically synchronized from your Mongoose model:
+
+| Index Type | Fields | Description |
+|-------------|---------|-------------|
+| Text | `name`, `tags`, `cuisine` | Enables text search (`q` parameter). |
+| Ascending/Descending | `price`, `rating`, `createdAt` | Optimizes sorting performance. |
+| Boolean | `isActive`, `openNow` | Supports filters for availability and active status. |
+
+---
+
+## 📚 Key Learnings and Improvements
+- Integration of **dynamic query handling** for search and filtering.  
+- Creation and synchronization of **MongoDB indexes** for performance.  
+- Practical understanding of **RESTful architecture and API parameterization**.  
+- Automated testing setup with **Postman and Newman**.  
+- Enhanced API maintainability through modular structure.
+
+---
+
 
 </details>
 
