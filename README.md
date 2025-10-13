@@ -1,10 +1,17 @@
-# MongoDB Database Setup – Restaurant Directory Platform 
+# Challenge 4: MongoDB Database Setup – Restaurant Directory Platform 
 
-This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents). 
+---
+
+## **Helping Tattler**
+A mexican company that offers a nationwide restaurant directory to solve the problem of decreasing traffic on its platform.
+
+---
+
+This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents) developong a RESTful API with Express.js framework. 
 
 **Project Deliverables**  
 **Sprint 1**: Set up and develop of database in MongoDB, **upload a database backup file**, including **created collections** and **import scripts from CSV files**.  
-**Sprint 2**: Develop a RESTful API using Express.js and MongoDB; test with Postman/Insomnia.  
+**Sprint 2**: Develop a RESTful API using Express.js and connect it to MongoDB; test with Postman/Insomnia.  
 **Sprint 3**: Extend the API with **search and filtering** features; demonstrate with Postman/Insomnia tests.  
 
 **Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  
