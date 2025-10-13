@@ -629,7 +629,8 @@ Indexes are managed by `create-indexes.js` and automatically synchronized from y
 
 </details>
 
-
+<details>
+<summary>More Info</summary>
 
 ## 🧠 Skills Required
 
@@ -796,6 +797,12 @@ A visual breakdown of the project budget and time distribution:
      │  Total: 12h = $1,500 USD │
      └──────────────────────────┘
 ```
+
+
+----
+
+</details>
+
 ---
 
 ## 👤 Author
