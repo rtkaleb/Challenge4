@@ -7,15 +7,21 @@
     "start": "node src/index.js",
     "seed": "node src/seeds/seed.js",
     "lint": "eslint .",
-    "test:api": "newman run postman/Tattler_API.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail"
+    "test:api": "newman run postman/Tattler_API.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail",
+    "make:indexes": "node src/scripts/create-indexes.js",
+    "test:search": "newman run postman/Tattler_Search.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail",
+    "test:all": "newman run postman/Tattler_API.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail && newman run postman/Tattler_Search.postman_collection.json -e postman/Tattler_Local.postman_environment.json --reporters cli --bail"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "mongoose": "^8.19.1"
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^8.19.1",
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
     "newman": "^6.2.1",
     "nodemon": "^3.1.10"
   }
-  
 }

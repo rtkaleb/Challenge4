@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Tattler API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      responses:
+        "200": { description: OK }
+  /api/restaurants:
+    get:
+      summary: List restaurants
+      parameters:
+        - in: query; name: city; schema: { type: string }
+        - in: query; name: cuisine; schema: { type: string } # "mexican,bbq"
+        - in: query; name: minRating; schema: { type: number }
+        - in: query; name: maxPrice; schema: { type: number }
+        - in: query; name: page; schema: { type: integer }
+        - in: query; name: limit; schema: { type: integer }
+        - in: query; name: sort; schema: { type: string }
+      responses:
+        "200": { description: OK }
+    post:
+      summary: Create restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Restaurant" }
+      responses:
+        "201": { description: Created }
+  /api/restaurants/{id}:
+    get: { responses: { "200": { description: OK }, "404": { description: Not found } } }
+    patch: { responses: { "200": { description: Updated }, "404": { description: Not found } } }
+    delete: { responses: { "200": { description: Soft deleted }, "404": { description: Not found } } }
+  /api/recommendations:
+    get:
+      parameters:
+        - in: query; name: userId; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK }
+components:
+  schemas:
+    Restaurant:
+      type: object
+      required: [name, city]
+      properties:
+        name: { type: string }
+        city: { type: string }
+        cuisine: { type: array, items: { type: string } }
+        price_level: { type: integer, minimum: 1, maximum: 4 }
+        rating: { type: number, minimum: 0, maximum: 5 }
+        tags: { type: array, items: { type: string } }
