@@ -1,20 +1,272 @@
-# Challenge 4: MongoDB Database Setup – Restaurant Directory Platform 
+# Tattler — REST API + MongoDB (Challenge 4)
 
----
-
-## **Helping Tattler**
-A mexican company that offers a nationwide restaurant directory to solve the problem of decreasing traffic on its platform.
-
----
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-000)]()
+[![Express](https://img.shields.io/badge/Express-API-000)]()
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-000)]()
+[![Postman/Newman](https://img.shields.io/badge/Tests-Postman%20%7C%20Newman-000)]()
 
 This README documents the **database layer** for the project where a traditional restaurant directory is transformed into a **personalized, dynamic experience**. The data is stored in a **non‑relational MongoDB** database (BSON/JSON documents) developong a RESTful API with Express.js framework. 
 
+**Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  Tattler helps **tourists and locals** find relevant options quickly (price, city, schedule, tastes), improving **retention** and **traffic** for the platform.
+
+> **Goal:** Turn a traditional restaurant directory into a **personalized, dynamic** experience using an **Express.js REST API** and **MongoDB** with search, filtering, sorting, and pagination.
+
+---
+
+## Table of Contents
+
+1. [Scope & Objectives](#scope--objectives)
+2. [Architecture & Repository Layout](#architecture--repository-layout)
+3. [Installation & Runbook](#installation--runbook)
+4. [Data Model & Indexes](#data-model--indexes)
+5. [Search/Filter Logic (Technical Analysis)](#searchfilter-logic-technical-analysis)
+6. [Endpoints](#endpoints)
+7. [Testing (Postman / Newman)](#testing-postman--newman)
+8. [Quality & Style](#quality--style)
+9. [Collaboration & Partial Peer Reviews (Evidence)](#collaboration--partial-peer-reviews-evidence)
+10. [Sustainability](#sustainability)
+11. [Scalability & Economic Viability](#scalability--economic-viability)
+12. [Deliverables-to-Requirements Map](#deliverables-to-requirements-map)
+13. [Learnings & Next Steps](#learnings--next-steps)
+14. [Author](#author)
+
+----
+
 **Project Deliverables**  
+
 **Sprint 1**: Set up and develop of database in MongoDB, **upload a database backup file**, including **created collections** and **import scripts from CSV files**.  
 **Sprint 2**: Develop a RESTful API using Express.js and connect it to MongoDB; test with Postman/Insomnia.  
 **Sprint 3**: Extend the API with **search and filtering** features; demonstrate with Postman/Insomnia tests.  
 
-**Tattler** is a restaurant directory platform inspired by a young tour guide who personalizes tourist experiences using relevant local data.  
+----
+
+## Architecture & Repository Layout
+
+```
+tattler-api/
+├─ src/
+│  ├─ config/           # DB connection (db.js)
+│  ├─ controllers/      # Business logic (CRUD, search/filter)
+│  ├─ models/           # Mongoose schemas + indexes
+│  ├─ routes/           # Express routes
+│  ├─ middlewares/      # Error handling
+│  ├─ scripts/          # create-indexes.js, seed.js
+│  └─ index.js          # App entry point
+├─ data/                # Sample CSVs (optional)
+├─ backup/              # MongoDB dumps (e.g., dump-YYYYMMDD-HHmm/)
+├─ postman/
+│  ├─ Tattler_API.postman_collection.json
+│  ├─ Tattler_Search.postman_collection.json
+│  └─ Tattler_Local.postman_environment.json
+├─ docs/
+│  └─ peer-reviews/     # PR evidence
+├─ .env.example
+├─ openapi.yaml
+└─ README.md
+```
+
+**High-level diagram**
+
+```plaintext
+Client ──► Express (Routes → Controllers) ──► Mongoose ──► MongoDB
+                               ▲
+                         Middlewares
+```
+
+---
+
+## Installation & Runbook
+
+```bash
+# 1) Dependencies
+npm install
+
+# 2) Environment
+cp .env.example .env
+# adjust MONGODB_URI if needed
+
+# 3) Create collection indexes (recommended for S3 features)
+npm run make:indexes
+
+# 4) Seed data (optional)
+npm run seed
+
+# 5) Start server
+npm run dev
+# http://localhost:3000/health
+```
+
+**Requirements:** Node 18+, MongoDB Community (service running), MongoDB Database Tools (for dump/import), Postman/Newman.
+
+---
+
+## Data Model & Indexes
+
+**Restaurant (summary)**
+```json
+{
+  "name": "Taquería La Silla",
+  "city": "Monterrey",
+  "cuisine": ["mexican"],
+  "price": 120,
+  "rating": 4.5,
+  "tags": ["tacos", "casual"],
+  "openNow": true,
+  "isActive": true,
+  "createdAt": "2025-10-10T12:00:00Z"
+}
+```
+
+**Recommended Indexes**
+- **Text**: `name`, `tags`, `cuisine` → enables `q` search.
+- **Sorting**: `price`, `rating`, `createdAt`.
+- **Booleans**: `openNow`, `isActive`.
+
+**Script:** `src/scripts/create-indexes.js` syncs indexes with the Mongoose model.
+
+---
+
+## Search/Filter Logic (Technical Analysis)
+
+`GET /api/restaurants` accepts:
+
+| Param | Type | Example | Effect |
+|---|---|---|---|
+| `q` | string | `?q=taco` | Full‑text search on `name`, `tags`, `cuisine` (text index). |
+| `city` | string | `?city=Monterrey` | Exact match filter. |
+| `cuisine` | string | `?cuisine=mexican,bbq` | Comma‑separated list (intersection). |
+| `price_min`,`price_max` | number | `?price_min=50&price_max=200` | Price range. |
+| `rating_gte` | number | `?rating_gte=4.2` | Minimum rating. |
+| `open_now` | boolean | `?open_now=true` | Only currently open. |
+| `sort` | string | `rating|price|name|createdAt` | Sort field. |
+| `order` | string | `asc|desc` | Sort direction. |
+| `page`,`limit` | number | `?page=2&limit=10` | Pagination (`skip/limit`). |
+
+**Query composition (summary):**
+- Build a **pipeline** with `$match` from filters and `$sort` from `sort/order`.
+- If `q` exists → `$text: { $search: q }` and add `score: { $meta: "textScore" }` to break ties.
+- Pagination via `skip = (page-1)*limit` and `limit`.
+- Response includes **metadata**: `page`, `limit`, `total`, `totalPages`.
+
+This addresses the feedback about **clarity of search/filter logic**.
+
+---
+
+## Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/health` | Service status |
+| GET | `/api/restaurants` | List with search/filter/sort/pagination |
+| GET | `/api/restaurants/:id` | Get by ID |
+| POST | `/api/restaurants` | Create |
+| PATCH | `/api/restaurants/:id` | Update |
+| DELETE | `/api/restaurants/:id` | Soft delete (`isActive=false`) |
+| GET | `/api/recommendations?userId=<id>` | Personalized recommendations (S2) |
+
+---
+
+## Testing (Postman / Newman)
+
+**Postman (GUI)**
+1. Import `postman/Tattler_API.postman_collection.json` and `postman/Tattler_Search.postman_collection.json`.
+2. Import `postman/Tattler_Local.postman_environment.json` and select the environment.
+3. Update `userId` with the seeded value.
+4. Run **Run collection** (API + Search). Expect 200/201.
+
+**Newman (CLI)**
+```bash
+npm run test:api       # base API tests
+npm run test:search    # search/filter tests
+```
+
+Please place screenshots under `docs/tests/`:
+- `01-health.png`, `02-list.png`, `03-create.png`, `04-get.png`, `05-delete.png`,
+- `06-search.png`, `07-sort.png`, `08-pagination.png`, `09-combined-filters.png`.
+
+---
+
+## Quality & Style
+
+- **Eslint + Prettier**: `npm run lint`
+- **Commit convention**: `feat/fix/docs/chore/refactor/test`
+- Centralized **error handling** in `src/middlewares/error.js`
+- Minimal **OpenAPI** in `openapi.yaml`
+- **README** with ToC, reproducible steps, tables, diagrams, checklists, screenshots → improves **quality orientation**
+
+---
+
+## Collaboration & Partial Peer Reviews (Evidence)
+
+> To address the “no evidence of collaboration” feedback, every PR leaves a documented trail.
+
+**Working branches**
+- `feature/restaurants-crud`
+- `feature/recommendations`
+- `feature/search-filtering`
+- `chore/tests-postman`
+
+**Three partial reviews**
+1. **PR#1 — Skeleton + DB connection**  
+   _Checklist_: structure, connection, health, basic seed.  
+   _Findings_: mixed `MONGO_URI`/`MONGODB_URI` → **fixed**.
+2. **PR#2 — CRUD + initial filters**  
+   _Checklist_: full CRUD, minimal validation, soft delete.  
+   _Findings_: `price_level` ambiguous → add `price` (keep `price_level` optional).
+3. **PR#3 — Full‑text + sort + pagination + tests**  
+   _Checklist_: text index, `q`, `sort/order`, `page/limit`, Postman collections.  
+   _Findings_: missing `createdAt` index → **added**.
+
+**Where is the evidence?**  
+- `/docs/peer-reviews/PR-0001.md`  
+- `/docs/peer-reviews/PR-0002.md`  
+- `/docs/peer-reviews/PR-0003.md`  
+- Postman screenshots in `/docs/tests/`
+
+---
+
+## Sustainability
+
+1. **Maintainability:** modular MVC, declarative indexes + sync script, reproducible docs.  
+2. **Efficiency:** targeted projections, pagination, composable filters; reduced CPU/IO.  
+3. **Lean infra:** runs on small instances (1 vCPU / 1–2 GB RAM).  
+4. **Licensing:** entirely open‑source (no fees).  
+5. **Backups:** `mongodump` scheduled; `/backup/` with restore guide.  
+6. **Footprint:** future HTTP caching and sensible defaults for `limit`.
+
+---
+
+## Scalability & Economic Viability
+
+**Scalability**
+- **Vertical:** more CPU/RAM for API/DB.
+- **Horizontal:** API replicas behind load balancer; MongoDB **replica set** for HA/reads.
+- **Data:** logical sharding by `city/region` if volume grows.
+- **Observability (future):** latency p95, structured logs, dashboards.
+
+**Costs (indicative, cloud)**
+- API (small container) ~ **$7–12 USD/mo**
+- Atlas M0/M10 (dev) **$0–9 USD/mo**; basic prod **$9–25 USD/mo**
+- Postman (free) + GitHub (free)
+
+**Impact**
+- Better **retention** via relevant search + performance.
+- Higher **conversion** through personalized recommendations.
+- Solid base for premium features (e.g., segmented promotions).
+
+---
+
+## Deliverables-to-Requirements Map
+
+| Requirement | Evidence |
+|---|---|
+| **DB created + backup + CSV scripts** | `/backup/dump-YYYYMMDD-HHmm/`, `/data/*.csv`, `/scripts/import.ps1` |
+| **REST API (Express + MongoDB)** | Code in `src/` and documented routes |
+| **Postman/Insomnia tests + screenshots** | `postman/*.json`, `docs/tests/*.png`, `npm run test:api`, `npm run test:search` |
+| **Partial peer reviews documented** | `docs/peer-reviews/PR-*.md`, `feature/*` branches |
+| **Search/filter/sort/pagination** | Indexes + described logic; `Tattler_Search` collection |
+| **Clear, organized documentation** | This README + `openapi.yaml` |
+
 
 
 <details> 
@@ -798,6 +1050,16 @@ A visual breakdown of the project budget and time distribution:
      │  Total: 12h = $1,500 USD │
      └──────────────────────────┘
 ```
+
+-----
+---
+
+## Learnings & Next Steps
+
+- Add **input validation** (Joi/Zod) and **auth** (JWT).
+- Cache popular queries + **ETag**/**Cache-Control**.
+- Docker Compose for dev; CI running Newman.
+- Personalized ranking signals for recommendations.
 
 
 </details>
